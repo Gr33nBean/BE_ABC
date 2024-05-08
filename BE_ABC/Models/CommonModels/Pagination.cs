@@ -1,4 +1,4 @@
-﻿namespace foody_be.Models.CommonModels
+﻿namespace BE_ABC.Models.CommonModels
 {
     public class Pagination
     {

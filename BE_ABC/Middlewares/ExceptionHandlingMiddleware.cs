@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 
-namespace foody_be.Middlewares
+namespace BE_ABC.Middlewares
 {
     public class ExceptionHandlingMiddleware
     {

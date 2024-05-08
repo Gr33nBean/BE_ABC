@@ -1,15 +1,15 @@
-using foody_be.Models.Context;
+using BE_ABC.Models.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Text.Json.Serialization;
-using foody_be.AppSettings;
+using BE_ABC.AppSettings;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using foody_be.Middlewares;
-using foody_be.Services;
-using foody_be.Services.GenericService;
+using BE_ABC.Middlewares;
+using BE_ABC.Services;
+using BE_ABC.Services.GenericService;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -42,7 +42,7 @@ try
         
 
         //service
-        services.AddScoped<UserService, UserService>();
+    
 
 
         services.AddDbContext<MyDbContext>(option =>

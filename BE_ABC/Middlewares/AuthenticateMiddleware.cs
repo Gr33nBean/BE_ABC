@@ -1,4 +1,4 @@
-﻿namespace foody_be.Middlewares
+﻿namespace BE_ABC.Middlewares
 {
     public class AuthenticateMiddleware
     {

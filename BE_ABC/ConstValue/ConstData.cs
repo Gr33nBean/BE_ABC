@@ -1,10 +1,10 @@
-﻿namespace foody_be.ConstValue
+﻿namespace BE_ABC.ConstValue
 {
     public enum StatusType
     {
         create = 0,
         active = 1,
-        inactive = 2,
+        inActive = 2,
     }
     public enum ActivityType
     {

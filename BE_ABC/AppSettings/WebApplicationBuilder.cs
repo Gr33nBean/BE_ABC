@@ -1,4 +1,4 @@
-﻿namespace foody_be.AppSettings
+﻿namespace BE_ABC.AppSettings
 {
     public static class WebApplicationBuilder
     {

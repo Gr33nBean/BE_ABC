@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace foody_be.AppSettings
+namespace BE_ABC.AppSettings
 {
     public class ConfigureSwaggerOptions
         : IConfigureNamedOptions<SwaggerGenOptions>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 
-namespace foody_be.AppSettings
+namespace BE_ABC.AppSettings
 {
     public class ValidationFilterAttribute : IActionFilter
     {

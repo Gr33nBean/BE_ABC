@@ -1,7 +1,7 @@
-﻿using foody_be.Models.Context;
+﻿using BE_ABC.Models.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace foody_be.Services.GenericService
+namespace BE_ABC.Services.GenericService
 {
     public class GenericService<T> where T : class
     {
