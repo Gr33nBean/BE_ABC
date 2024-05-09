@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BE_ABC.Migrations
 {
     /// <inheritdoc />
-    public partial class initdb : Migration
+    public partial class fullerd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -218,8 +218,8 @@ namespace BE_ABC.Migrations
                 {
                     uid = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    departmentId = table.Column<int>(type: "int", nullable: false),
-                    grade = table.Column<int>(type: "int", nullable: false),
+                    departmentId = table.Column<int>(type: "int", nullable: true),
+                    grade = table.Column<int>(type: "int", nullable: true),
                     username = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     birthday = table.Column<DateTime>(type: "datetime(6)", nullable: false),
@@ -229,7 +229,7 @@ namespace BE_ABC.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     description = table.Column<string>(type: "text", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    permissionIdToCRUD = table.Column<string>(type: "longtext", nullable: false)
+                    permissionIdToCRUD = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     createAt = table.Column<int>(type: "int", nullable: false),
                     updateAt = table.Column<int>(type: "int", nullable: false),
@@ -242,8 +242,7 @@ namespace BE_ABC.Migrations
                         name: "FK_User_Department_departmentId",
                         column: x => x.departmentId,
                         principalTable: "Department",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

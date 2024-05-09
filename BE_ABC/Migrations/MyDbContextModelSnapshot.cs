@@ -725,7 +725,7 @@ namespace BE_ABC.Migrations
                     b.Property<int>("createAt")
                         .HasColumnType("int");
 
-                    b.Property<int>("departmentId")
+                    b.Property<int?>("departmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("description")
@@ -736,11 +736,10 @@ namespace BE_ABC.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("grade")
+                    b.Property<int?>("grade")
                         .HasColumnType("int");
 
                     b.Property<string>("permissionIdToCRUD")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("status")
@@ -774,7 +773,7 @@ namespace BE_ABC.Migrations
             modelBuilder.Entity("BE_ABC.Models.ErdModel.Post", b =>
                 {
                     b.HasOne("BE_ABC.Models.ErdModels.User", "User")
-                        .WithMany("Post")
+                        .WithMany()
                         .HasForeignKey("creatorUid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -805,7 +804,7 @@ namespace BE_ABC.Migrations
                         .IsRequired();
 
                     b.HasOne("BE_ABC.Models.ErdModels.User", "User")
-                        .WithMany("PostComment")
+                        .WithMany()
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -824,7 +823,7 @@ namespace BE_ABC.Migrations
                         .IsRequired();
 
                     b.HasOne("BE_ABC.Models.ErdModels.User", "User")
-                        .WithMany("PostLike")
+                        .WithMany()
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -848,7 +847,7 @@ namespace BE_ABC.Migrations
             modelBuilder.Entity("BE_ABC.Models.ErdModels.Document", b =>
                 {
                     b.HasOne("BE_ABC.Models.ErdModels.User", "User")
-                        .WithMany("Document")
+                        .WithMany()
                         .HasForeignKey("creatorUid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -881,7 +880,7 @@ namespace BE_ABC.Migrations
                         .IsRequired();
 
                     b.HasOne("BE_ABC.Models.ErdModels.User", "User")
-                        .WithMany("Event")
+                        .WithMany()
                         .HasForeignKey("reporterUid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -979,9 +978,7 @@ namespace BE_ABC.Migrations
                 {
                     b.HasOne("BE_ABC.Models.ErdModel.Department", "Department")
                         .WithMany()
-                        .HasForeignKey("departmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("departmentId");
 
                     b.Navigation("Department");
                 });
@@ -1037,19 +1034,6 @@ namespace BE_ABC.Migrations
             modelBuilder.Entity("BE_ABC.Models.ErdModels.RequestType", b =>
                 {
                     b.Navigation("Request");
-                });
-
-            modelBuilder.Entity("BE_ABC.Models.ErdModels.User", b =>
-                {
-                    b.Navigation("Document");
-
-                    b.Navigation("Event");
-
-                    b.Navigation("Post");
-
-                    b.Navigation("PostComment");
-
-                    b.Navigation("PostLike");
                 });
 #pragma warning restore 612, 618
         }
