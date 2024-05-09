@@ -21,11 +21,10 @@ namespace BE_ABC.Models.ErdModels
         public StatusType status { get; set; }
         [ForeignKey("reporterUid")]
         public User Reporter { get; set; }
-        [ForeignKey("borroerUid")]
+        [ForeignKey("borrowerUid")]
         public User Borrower { get; set; }
         [ForeignKey("resourceId")]
         public Resource Resource { get; set; }
-        public virtual ICollection<Event> Event { get; set; }
         
     }
 }
