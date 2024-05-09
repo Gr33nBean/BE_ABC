@@ -18,5 +18,6 @@ namespace BE_ABC.Models.ErdModels
         public int createAt { get; set; }
         public int updateAt { get; set; }
         public StatusType status { get; set; }
+        public ICollection<Event> Event { get; set; }  
     }
 }

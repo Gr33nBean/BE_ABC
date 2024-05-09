@@ -1,4 +1,5 @@
 ﻿using BE_ABC.ConstValue;
+using BE_ABC.Models.ErdModels;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security;
@@ -13,9 +14,13 @@ namespace BE_ABC.Models.ErdModel
         public int id { get; set; }
         public string directorUid { get; set; }
         public int name {  get; set; }
-        public string permissionIdToCRUD { get; set; }
+        public List<Grade> permissionIdToCRUD { get; set; }
         public int createAt { get; set; }
         public int updateAt { get; set; }
         public StatusType status { get; set; }
+
+        [ForeignKey("directorUid")]
+        public User User { get; set; }
+        public virtual ICollection<RequestType> RequestType { get; set; }
     }
 }

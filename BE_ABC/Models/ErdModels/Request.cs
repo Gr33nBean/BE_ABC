@@ -26,6 +26,11 @@ namespace BE_ABC.Models.ErdModels
         public int createAt { get; set; }
         public int updateAt { get; set; }
         public StatusType status { get; set; }
-
+        [ForeignKey("requesterUid")]
+        public User Requester { get; set; }
+        [ForeignKey("reporterUid")]
+        public User Reporter { get; set; }
+        [ForeignKey("requestType")]
+        public RequestType RequestType { get; set; }
     }
 }

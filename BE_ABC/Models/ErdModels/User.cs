@@ -1,4 +1,5 @@
 ﻿using BE_ABC.ConstValue;
+using BE_ABC.Models.ErdModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,5 +22,12 @@ namespace BE_ABC.Models.ErdModels
         public int createAt { get; set; }
         public int updateAt { get; set; }
         public StatusType status { get; set; }
+        [ForeignKey("departmentId")]
+        public Department Department { get; set; }
+        public virtual ICollection<PostLike> PostLike { get; set; }
+        public virtual ICollection<PostComment> PostComment { get; set; }
+        public virtual ICollection<Post> Post { get; set; }
+        public virtual ICollection<Event> Event { get; set; }
+        public virtual ICollection<Document> Document { get; set; }
     }
 }

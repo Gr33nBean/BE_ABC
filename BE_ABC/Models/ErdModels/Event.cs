@@ -1,4 +1,6 @@
 ﻿using BE_ABC.ConstValue;
+using BE_ABC.Models.ErdModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BE_ABC.Models.ErdModels
@@ -23,5 +25,12 @@ namespace BE_ABC.Models.ErdModels
         public int createAt { get; set; }
         public int updateAt { get; set; }
         public StatusType status { get; set; }
+        public virtual ICollection<Post> Post { get; set; }
+        [ForeignKey("resouceUsingId")]
+        public ResourceUsing ResourceUsing { get; set; }
+        [ForeignKey("reporterUid")]
+        public User User { get; set; }
+        [ForeignKey("eventTypeId")]
+        public EventType EventType { get; set; }
     }
 }
