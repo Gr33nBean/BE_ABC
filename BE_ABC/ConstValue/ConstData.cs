@@ -2,16 +2,34 @@
 {
     public enum StatusType
     {
-        create = 0,
-        active = 1,
-        inActive = 2,
+        create,
+        active,
+        inActive,
     }
-    public enum ActivityType
+    public enum Grade
     {
-        xsm = 0,
-        sm = 1,
-        md = 2,
-        lg = 3,
-        xlg = 4,
+        employee,
+        manager,
+        director,
+        admin,
+    }
+    public enum Action
+    {
+        create,
+        read,
+        update,
+        delete,
+    }
+    public enum MetricType
+    {
+        like,
+        view,
+        comment,
+    }
+    public enum ApprovalStatus
+    {
+        pending,
+        approve,
+        cancel,
     }
 }
