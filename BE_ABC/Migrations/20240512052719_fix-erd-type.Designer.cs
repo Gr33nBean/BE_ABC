@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE_ABC.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240512015109_update-model-v1")]
-    partial class updatemodelv1
+    [Migration("20240512052719_fix-erd-type")]
+    partial class fixerdtype
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,8 +40,9 @@ namespace BE_ABC.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("name")
-                        .HasColumnType("int");
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("permissionIdToCRUD")
                         .IsRequired()
@@ -55,8 +56,7 @@ namespace BE_ABC.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("directorUid")
-                        .IsUnique();
+                    b.HasIndex("directorUid");
 
                     b.ToTable("Department");
                 });
@@ -879,7 +879,7 @@ namespace BE_ABC.Migrations
             modelBuilder.Entity("BE_ABC.Models.ErdModels.RequestType", b =>
                 {
                     b.HasOne("BE_ABC.Models.ErdModel.Department", "Department")
-                        .WithMany("RequestType")
+                        .WithMany()
                         .HasForeignKey("approvalDepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -921,11 +921,6 @@ namespace BE_ABC.Migrations
                         .HasForeignKey("departmentId");
 
                     b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("BE_ABC.Models.ErdModel.Department", b =>
-                {
-                    b.Navigation("RequestType");
                 });
 
             modelBuilder.Entity("BE_ABC.Models.ErdModel.Post", b =>

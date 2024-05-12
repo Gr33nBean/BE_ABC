@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BE_ABC.Migrations
 {
     /// <inheritdoc />
-    public partial class updatemodelv1 : Migration
+    public partial class fixerdtype : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -168,7 +168,8 @@ namespace BE_ABC.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     directorUid = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    name = table.Column<int>(type: "int", nullable: false),
+                    name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     permissionIdToCRUD = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     createAt = table.Column<int>(type: "int", nullable: false),
@@ -533,8 +534,7 @@ namespace BE_ABC.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Department_directorUid",
                 table: "Department",
-                column: "directorUid",
-                unique: true);
+                column: "directorUid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Document_creatorUid",
