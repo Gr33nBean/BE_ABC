@@ -83,6 +83,14 @@ namespace BE_ABC.Migrations
                     b.Property<int?>("eventId")
                         .HasColumnType("int");
 
+                    b.Property<string>("files")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("images")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("likes")
                         .HasColumnType("int");
 
@@ -128,6 +136,14 @@ namespace BE_ABC.Migrations
 
                     b.Property<int>("createAt")
                         .HasColumnType("int");
+
+                    b.Property<string>("file")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("images")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("postId")
                         .HasColumnType("int");
@@ -278,8 +294,9 @@ namespace BE_ABC.Migrations
                     b.Property<int>("documentTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("fileid")
-                        .HasColumnType("int");
+                    b.Property<string>("file")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
@@ -292,8 +309,6 @@ namespace BE_ABC.Migrations
                     b.HasIndex("creatorUid");
 
                     b.HasIndex("documentTypeId");
-
-                    b.HasIndex("fileid");
 
                     b.ToTable("Document");
                 });
@@ -437,54 +452,6 @@ namespace BE_ABC.Migrations
                     b.ToTable("EventType");
                 });
 
-            modelBuilder.Entity("BE_ABC.Models.ErdModels.Files", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int?>("PostCommentid")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PostCommentid1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Postid")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Postid1")
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("size")
-                        .HasColumnType("int");
-
-                    b.Property<string>("type")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("url")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("PostCommentid");
-
-                    b.HasIndex("PostCommentid1");
-
-                    b.HasIndex("Postid");
-
-                    b.HasIndex("Postid1");
-
-                    b.ToTable("Files");
-                });
-
             modelBuilder.Entity("BE_ABC.Models.ErdModels.Permission", b =>
                 {
                     b.Property<int>("id")
@@ -586,9 +553,6 @@ namespace BE_ABC.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("Departmentid")
-                        .HasColumnType("int");
-
                     b.Property<int>("approvalDepartmentId")
                         .HasColumnType("int");
 
@@ -618,7 +582,7 @@ namespace BE_ABC.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Departmentid");
+                    b.HasIndex("approvalDepartmentId");
 
                     b.ToTable("RequestType");
                 });
@@ -745,7 +709,7 @@ namespace BE_ABC.Migrations
                     b.Property<int>("status")
                         .HasColumnType("int");
 
-                    b.Property<int>("updateAt")
+                    b.Property<int?>("updateAt")
                         .HasColumnType("int");
 
                     b.Property<string>("username")
@@ -783,7 +747,7 @@ namespace BE_ABC.Migrations
                         .HasForeignKey("eventId");
 
                     b.HasOne("BE_ABC.Models.ErdModel.PostType", "PostType")
-                        .WithMany("Post")
+                        .WithMany()
                         .HasForeignKey("postTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -853,22 +817,14 @@ namespace BE_ABC.Migrations
                         .IsRequired();
 
                     b.HasOne("BE_ABC.Models.ErdModels.DocumentType", "DocumentType")
-                        .WithMany("Document")
-                        .HasForeignKey("documentTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BE_ABC.Models.ErdModels.Files", "file")
                         .WithMany()
-                        .HasForeignKey("fileid")
+                        .HasForeignKey("documentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DocumentType");
 
                     b.Navigation("User");
-
-                    b.Navigation("file");
                 });
 
             modelBuilder.Entity("BE_ABC.Models.ErdModels.Event", b =>
@@ -890,25 +846,6 @@ namespace BE_ABC.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BE_ABC.Models.ErdModels.Files", b =>
-                {
-                    b.HasOne("BE_ABC.Models.ErdModel.PostComment", null)
-                        .WithMany("file")
-                        .HasForeignKey("PostCommentid");
-
-                    b.HasOne("BE_ABC.Models.ErdModel.PostComment", null)
-                        .WithMany("images")
-                        .HasForeignKey("PostCommentid1");
-
-                    b.HasOne("BE_ABC.Models.ErdModel.Post", null)
-                        .WithMany("files")
-                        .HasForeignKey("Postid");
-
-                    b.HasOne("BE_ABC.Models.ErdModel.Post", null)
-                        .WithMany("images")
-                        .HasForeignKey("Postid1");
-                });
-
             modelBuilder.Entity("BE_ABC.Models.ErdModels.Request", b =>
                 {
                     b.HasOne("BE_ABC.Models.ErdModels.User", "Reporter")
@@ -918,7 +855,7 @@ namespace BE_ABC.Migrations
                         .IsRequired();
 
                     b.HasOne("BE_ABC.Models.ErdModels.RequestType", "RequestType")
-                        .WithMany("Request")
+                        .WithMany()
                         .HasForeignKey("requestType")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -940,7 +877,7 @@ namespace BE_ABC.Migrations
                 {
                     b.HasOne("BE_ABC.Models.ErdModel.Department", "Department")
                         .WithMany("RequestType")
-                        .HasForeignKey("Departmentid")
+                        .HasForeignKey("approvalDepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -993,32 +930,11 @@ namespace BE_ABC.Migrations
                     b.Navigation("PostComment");
 
                     b.Navigation("PostLike");
-
-                    b.Navigation("files");
-
-                    b.Navigation("images");
-                });
-
-            modelBuilder.Entity("BE_ABC.Models.ErdModel.PostComment", b =>
-                {
-                    b.Navigation("file");
-
-                    b.Navigation("images");
-                });
-
-            modelBuilder.Entity("BE_ABC.Models.ErdModel.PostType", b =>
-                {
-                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("BE_ABC.Models.ErdModel.Resource", b =>
                 {
                     b.Navigation("ResourceUsing");
-                });
-
-            modelBuilder.Entity("BE_ABC.Models.ErdModels.DocumentType", b =>
-                {
-                    b.Navigation("Document");
                 });
 
             modelBuilder.Entity("BE_ABC.Models.ErdModels.Event", b =>
@@ -1029,11 +945,6 @@ namespace BE_ABC.Migrations
             modelBuilder.Entity("BE_ABC.Models.ErdModels.EventType", b =>
                 {
                     b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("BE_ABC.Models.ErdModels.RequestType", b =>
-                {
-                    b.Navigation("Request");
                 });
 #pragma warning restore 612, 618
         }
