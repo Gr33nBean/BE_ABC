@@ -11,7 +11,7 @@ namespace BE_ABC.Models.ErdModel
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
-        public int postTypeId { get; set; }
+        public string postTypeId { get; set; }
         public string creatorUid { get; set; }
         public int? eventId { get; set; }
         public string[] mentionUid {  get; set; }
