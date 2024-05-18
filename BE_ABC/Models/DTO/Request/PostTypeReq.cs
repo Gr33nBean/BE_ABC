@@ -10,6 +10,7 @@ namespace BE_ABC.Models.DTO.Request
         public string description { get; set; }
         public List<Grade> permissionIdToCRUDPost { get; set; }
         public List<Grade> permissionIdToCRUD { get; set; }
+        [Range(0,2)]
         public StatusType status { get; set; }
 
     }
