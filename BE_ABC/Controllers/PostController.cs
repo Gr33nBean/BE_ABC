@@ -29,6 +29,7 @@ namespace BE_ABC.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost]
         [Route("get")]
         public async Task<IActionResult> getBylist(List<string> uid)
         {

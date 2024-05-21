@@ -9,7 +9,7 @@ namespace BE_ABC.Controllers
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class PostCommentController: ControllerBase
+    public class PostCommentController : ControllerBase
     {
         private readonly PostCommentService postCommentService;
         public PostCommentController(PostCommentService postCommentController)
@@ -29,6 +29,7 @@ namespace BE_ABC.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost]
         [Route("get")]
         public async Task<IActionResult> getBylist(List<string> uid)
         {
