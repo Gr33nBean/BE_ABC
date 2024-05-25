@@ -45,6 +45,8 @@ try
         services.AddScoped<UserService, UserService>();
         services.AddScoped<PostTypeService, PostTypeService>();
         services.AddScoped<PostCommentService, PostCommentService>();
+        services.AddScoped<RequestTypeService, RequestTypeService>();
+
 
         services.AddDbContext<MyDbContext>(option =>
         {
