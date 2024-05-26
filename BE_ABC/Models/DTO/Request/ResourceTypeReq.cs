@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace BE_ABC.Models.DTO
+namespace BE_ABC.Models.DTO.Request
 {
     public class ResourceTypeReq
     {

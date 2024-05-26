@@ -1,6 +1,5 @@
 ﻿using BE_ABC.Models.CommonModels;
 using BE_ABC.Models.Context;
-using BE_ABC.Models.DTO;
 using BE_ABC.Models.DTO.Request;
 using BE_ABC.Models.ErdModel;
 using BE_ABC.Models.ErdModels;
@@ -17,7 +16,7 @@ namespace BE_ABC.Services
         {
         }
 
-        public async Task<(bool, string)> checkInsertPost(ResourceTypeReq req)
+        public async Task<(bool, string)> checkInsert(ResourceTypeReq req)
         {
             var findType = await db.ResourceType.FindAsync(req.id);
             if (findType != null)
@@ -28,7 +27,7 @@ namespace BE_ABC.Services
             return (true, "");
         }
 
-        internal async Task<(bool, string)> checkUpdate(Post req)
+        internal async Task<(bool, string)> checkUpdate(ResourceType req)
         {
             var findType = await db.ResourceType.FindAsync(req.id);
             if (findType == null)
