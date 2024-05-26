@@ -30,6 +30,30 @@ namespace BE_ABC.Controllers
             }
         }
         [HttpPost]
+        [Route("get")]
+        public async Task<IActionResult> getBylist(List<string> uid)
+        {
+            try
+            {
+                List<PostType> list = new List<PostType>();
+                foreach (var req in uid)
+                {
+                    var find = await postTypeService.FindByIdAsync(req);
+                    if (find != null)
+                    {
+                        list.Add(find);
+                    }
+
+                }
+
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost]
         [Route("")]
         public async Task<IActionResult> insert(List<PostTypeReq> ptReq)
         {

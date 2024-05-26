@@ -1,6 +1,7 @@
 ﻿using BE_ABC.Models.CommonModels;
 using BE_ABC.Models.DTO.Request;
 using BE_ABC.Models.ErdModel;
+using BE_ABC.Models.ErdModels;
 using BE_ABC.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,30 @@ namespace BE_ABC.Controllers
             try
             {
                 return Ok(DepartmentService.getAll(pagination));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("get")]
+        public async Task<IActionResult> getBylist(List<string> id)
+        {
+            try
+            {
+                List<Department> list = new List<Department>();
+                foreach (var req in id)
+                {
+                    var find = await DepartmentService.FindByIdAsync(req);
+                    if (find != null)
+                    {
+                        list.Add(find);
+                    }
+
+                }
+
+                return Ok(list);
             }
             catch (Exception ex)
             {

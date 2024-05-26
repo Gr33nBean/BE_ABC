@@ -5,6 +5,7 @@ using BE_ABC.Models.ErdModel;
 using BE_ABC.Models.ErdModels;
 using BE_ABC.Services.GenericService;
 using BE_ABC.Util;
+using Microsoft.EntityFrameworkCore;
 
 namespace BE_ABC.Services
 {
@@ -44,7 +45,10 @@ namespace BE_ABC.Services
 
         internal List<Post> getAll(Pagination page)
         {
-            var user = db.Post.Skip((page.page - 1) * page.limit).Take(page.limit).ToList();
+            var user = db.Post
+                .Include(u => u.User)
+                .Include(u => u.Event)
+                .Skip((page.page - 1) * page.limit).Take(page.limit).ToList();
             if (user != null)
             {
                 return user;

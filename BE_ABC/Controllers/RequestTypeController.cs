@@ -30,6 +30,30 @@ namespace BE_ABC.Controllers
             }
         }
         [HttpPost]
+        [Route("get")]
+        public async Task<IActionResult> getBylist(List<string> id)
+        {
+            try
+            {
+                List<RequestType> list = new List<RequestType>();
+                foreach (var req in id)
+                {
+                    var find = await RequestTypeService.FindByIdAsync(req);
+                    if (find != null)
+                    {
+                        list.Add(find);
+                    }
+
+                }
+
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost]
         [Route("")]
         public async Task<IActionResult> insert(List<RequestTypeReq> ptReq)
         {
