@@ -1,7 +1,6 @@
 ﻿using BE_ABC.Models.CommonModels;
 using BE_ABC.Models.DTO.Request;
 using BE_ABC.Models.ErdModel;
-using BE_ABC.Models.ErdModels;
 using BE_ABC.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +8,12 @@ namespace BE_ABC.Controllers
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class PostController : Controller
+    public class PostLikeController : Controller
     {
-        private readonly PostService postService;
-        public PostController(PostService postService)
+        private readonly PostLikeService PostLikeService;
+        public PostLikeController(PostLikeService PostLikeService)
         {
-            this.postService = postService;
+            this.PostLikeService = PostLikeService;
         }
         [HttpPost]
         [Route("getAll")]
@@ -22,7 +21,7 @@ namespace BE_ABC.Controllers
         {
             try
             {
-                return Ok(postService.getAll(pagination));
+                return Ok(PostLikeService.getAll(pagination));
             }
             catch (Exception ex)
             {
@@ -35,10 +34,10 @@ namespace BE_ABC.Controllers
         {
             try
             {
-                List<Post> list = new List<Post>();
+                List<PostLike> list = new List<PostLike>();
                 foreach (var req in uid)
                 {
-                    var find = await postService.FindByIdAsync(req);
+                    var find = await PostLikeService.FindByIdAsync(req);
                     if (find != null)
                     {
                         list.Add(find);
@@ -55,23 +54,23 @@ namespace BE_ABC.Controllers
         }
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> insert(List<PostReq> ptReq)
+        public async Task<IActionResult> insert(List<PostLikeReq> ptReq)
         {
             try
             {
                 foreach (var req in ptReq)
                 {
-                    var (check, err) = await postService.checkInsertPost(req);
+                    var (check, err) = await PostLikeService.checkInsert(req);
                     if (!check)
                     {
                         return BadRequest(err);
                     }
                 }
 
-                var listInsertedUser = new List<Post>();
+                var listInsertedUser = new List<PostLike>();
                 foreach (var req in ptReq)
                 {
-                    var entity = await postService.insert(req);
+                    var entity = await PostLikeService.insert(req);
                     listInsertedUser.Add(entity);
                 }
 
@@ -79,24 +78,27 @@ namespace BE_ABC.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "intentional server error.");
+                return BadRequest(ex.Message);
             }
         }
         [HttpPut]
         [Route("")]
-        public async Task<IActionResult> update(List<Post> pt)
+        public async Task<IActionResult> update(List<PostLike> pt)
         {
             try
             {
                 foreach (var req in pt)
                 {
-                    await postService.checkUpdate(req);
+                    var (check, err) = await PostLikeService.checkUpdate(req);
+                    if (!check)
+                    {
+                        return BadRequest(err);
+                    }
                 }
-
 
                 foreach (var req in pt)
                 {
-                    await postService.update(req);
+                    await PostLikeService.update(req);
                 }
 
                 return NoContent();
@@ -108,15 +110,15 @@ namespace BE_ABC.Controllers
         }
         [HttpDelete]
         [Route("")]
-        public async Task<IActionResult> hardDelete(List<int> id)
+        public async Task<IActionResult> hardDelete(List<int> uid)
         {
             try
             {
-                foreach (var req in id)
+                foreach (var req in uid)
                 {
-                    var find = await postService.FindByIdAsync(req);
+                    var find = await PostLikeService.FindByIdAsync(req);
                     if (find != null)
-                        await postService.DeleteAsync(find);
+                        await PostLikeService.DeleteAsync(find);
                 }
 
                 return NoContent();

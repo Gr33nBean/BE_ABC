@@ -43,6 +43,38 @@ namespace BE_ABC.Services
             return (true, "");
         }
 
+        internal async Task<(bool, string)> checkUpdate(Post req)
+        {
+            var findPost = await db.Post.FindAsync(req.id);
+            if (findPost == null)
+            {
+                return (false, $"Post {req.id} not found");
+            }
+
+            var findUser = await db.User.FindAsync(req.creatorUid);
+            if (findPost == null)
+            {
+                return (false, $"User {req.creatorUid} not found");
+            }
+
+            var findPostType = await db.PostType.FindAsync(req.postTypeId);
+            if (findPost == null)
+            {
+                return (false, $"PostType {req.postTypeId} not found");
+            }
+
+            if (req.eventId != null)
+            {
+                var findEvent = await db.Event.FindAsync(req.eventId);
+                if (findEvent == null)
+                {
+                    return (false, $"Event {req.eventId} not found");
+                }
+            }
+
+            return (true, "Ok");
+        }
+
         internal List<Post> getAll(Pagination page)
         {
             var user = db.Post
@@ -83,9 +115,24 @@ namespace BE_ABC.Services
             return entityEntry.Entity;
         }
 
-        internal async Task update(PostType req)
+        internal async Task update(Post req)
         {
-            throw new NotImplementedException();
+            var findUser = await db.Post.FindAsync(req.id);
+            if (findUser != null)
+            {
+                findUser.id = req.id;
+                findUser.postTypeId = req.postTypeId;
+                findUser.creatorUid = req.creatorUid;
+                findUser.eventId = req.eventId;
+                findUser.mentionUid = req.mentionUid;
+                findUser.title = req.title;
+                findUser.content = req.content;
+                findUser.images = req.images;
+                findUser.files = req.files;
+                findUser.updateAt = DateTimeExtensions.getUxixTimeNow();
+                findUser.status = req.status;
+
+            }
         }
     }
 }
