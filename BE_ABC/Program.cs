@@ -12,6 +12,7 @@ using BE_ABC.Services;
 using BE_ABC.Services.GenericService;
 using BE_ABC.Models.ErdModel;
 
+
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
@@ -88,6 +89,7 @@ try
             .AddJsonOptions(option =>
             {
                 option.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                option.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
         services.AddApiVersioning(option =>
