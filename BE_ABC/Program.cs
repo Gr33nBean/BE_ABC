@@ -50,6 +50,7 @@ try
         services.AddScoped<RequestTypeService, RequestTypeService>();
         services.AddScoped<DepartmentService, DepartmentService>();
         services.AddScoped<PostService, PostService>();
+        services.AddScoped<ResourceTypeService, ResourceTypeService>();
 
 
         services.AddDbContext<MyDbContext>(option =>
