@@ -52,7 +52,7 @@ try
         services.AddScoped<DepartmentService, DepartmentService>();
         services.AddScoped<PostService, PostService>();
         services.AddScoped<ResourceTypeService, ResourceTypeService>();
-
+        services.AddScoped<ResourceService, ResourceService>();
 
         services.AddDbContext<MyDbContext>(option =>
         {
