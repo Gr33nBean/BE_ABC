@@ -55,10 +55,20 @@ namespace BE_ABC.Services
                 await db.SaveChangesAsync();
             }
         }
-        public async Task<Event>? insert(EventReq item)
+        public async Task<(bool, string)> checkUpdate(EventReq item)
+        {
+            var findEvent = await db.Event.FindAsync(item.id);
+
+            if (findEvent == null)
+            {
+                return (false, "Event not found");
+            }
+
+            return (true, "Ok");
+        }
+        public async Task<Event>? insert(EventCreateReq item)
         {
             Event newEvent = new Event();
-            newEvent.id = item.id;
             newEvent.name = item.name;
             newEvent.eventTypeId = item.eventTypeId;
             newEvent.reporterUid = item.reporterUid;
