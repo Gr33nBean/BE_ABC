@@ -24,7 +24,7 @@ namespace BE_ABC.Controllers
                 List<User> list = new List<User> ();
                foreach (var req in uid)
                 {
-                    var find = await userService.FindByIdAsync(req);
+                    var find = await userService.get(req);
                     if (find != null)
                     {
                         list.Add(find);
