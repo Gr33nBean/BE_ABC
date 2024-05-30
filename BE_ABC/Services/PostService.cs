@@ -2,9 +2,7 @@
 using BE_ABC.Models.Context;
 using BE_ABC.Models.DTO.insertReq;
 using BE_ABC.Models.DTO.Request;
-using BE_ABC.Models.DTO.updateReq;
 using BE_ABC.Models.ErdModel;
-using BE_ABC.Models.ErdModels;
 using BE_ABC.Services.GenericService;
 using BE_ABC.Util;
 using Microsoft.EntityFrameworkCore;
