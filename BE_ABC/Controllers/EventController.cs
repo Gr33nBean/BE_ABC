@@ -140,5 +140,19 @@ namespace BE_ABC.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("today")]
+        public async Task<IActionResult> today()
+        {
+            try
+            {
+                return Ok(eventService.today());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

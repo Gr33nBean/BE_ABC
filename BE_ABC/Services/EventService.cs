@@ -138,5 +138,19 @@ namespace BE_ABC.Services
                  .ToList();
             return events;
         }
+
+        public List<Event> today()
+        {
+            var startOfDay = (int)(DateTime.UtcNow.Date - new DateTime(1970, 1, 1)).TotalSeconds;
+            var endOfDay = (int)(DateTime.UtcNow.Date.AddDays(1) - new DateTime(1970, 1, 1)).TotalSeconds;
+
+            var events = db.Event
+                 .Where(e => (e.startAt>=startOfDay&&e.startAt<=endOfDay)|| (e.endAt >= startOfDay && e.endAt <= endOfDay))
+                 .Include(e => e.EventType)
+                 .Include(e => e.User)
+                 .Include(e => e.Resource)
+                 .ToList();
+            return events;
+        }
     }
 }
