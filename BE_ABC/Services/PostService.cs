@@ -1,8 +1,8 @@
 ﻿using BE_ABC.Models.CommonModels;
 using BE_ABC.Models.Context;
+using BE_ABC.Models.DTO.insertReq;
 using BE_ABC.Models.DTO.Request;
 using BE_ABC.Models.ErdModel;
-using BE_ABC.Models.ErdModels;
 using BE_ABC.Services.GenericService;
 using BE_ABC.Util;
 using Microsoft.EntityFrameworkCore;
@@ -51,7 +51,7 @@ namespace BE_ABC.Services
             return (true, "");
         }
 
-        internal async Task<(bool, string)> checkUpdate(Post req)
+        internal async Task<(bool, string)> checkUpdate(PostUpdate req)
         {
             var findPost = await db.Post.FindAsync(req.id);
             if (findPost == null)
@@ -82,12 +82,22 @@ namespace BE_ABC.Services
 
             return (true, "Ok");
         }
+        internal async Task<List<Post>> getByUid(string uid)
+        {
+            var post = db.Post.Where(u => u.creatorUid == uid)
+                .Include(u => u.User)
+                .Include(u => u.PostType)
+                .Include(u => u.Event)
+                .ToList();
 
+            return post;
+        }
         internal async Task<Post> get(int req)
         {
             var user = db.Post
             .Where(u => u.id == req)
             .Include(u => u.User)
+            .Include(u => u.PostType)
             .Include(u => u.Event)
             .FirstOrDefault();
 
@@ -99,10 +109,13 @@ namespace BE_ABC.Services
             var user = db.Post
             .Include(u => u.User)
             .Include(u => u.Event)
+            .Include(u => u.PostType)
             .Skip((page.page - 1) * page.limit).Take(page.limit).ToList();
 
             return user;
         }
+
+
 
         internal async Task<Post> insert(PostReq req)
         {
@@ -130,7 +143,7 @@ namespace BE_ABC.Services
             return entityEntry.Entity;
         }
 
-        internal async Task update(Post req)
+        internal async Task update(PostUpdate req)
         {
             var findUser = await db.Post.FindAsync(req.id);
             if (findUser != null)
@@ -151,6 +164,27 @@ namespace BE_ABC.Services
 
                 await db.SaveChangesAsync();
             }
+        }
+
+        public List<Post> search(SearchReq page)
+        {
+            // Ensure page number is not less than 1
+            if (page.page < 1)
+                page.page = 1;
+
+            // Ensure limit is not less than 1
+            if (page.limit < 1)
+                page.limit = 1;
+
+            var items = db.Post
+                 .Where(e => e.title.Contains(page.text) || e.content.Contains(page.text))
+                 .Include(e => e.Event)
+                 .Include(e => e.User)
+                 .Include(e => e.PostType)
+                 .Skip((page.page - 1) * page.limit)
+                 .Take(page.limit)
+                 .ToList();
+            return items;
         }
     }
 }

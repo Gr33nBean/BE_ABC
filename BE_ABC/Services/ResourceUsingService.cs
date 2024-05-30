@@ -17,7 +17,7 @@ namespace BE_ABC.Services
         }
         public async Task<(bool check, string err)> checkInsert(ResourceUsingReq req)
         {
-            var findType = await db.Resource.FindAsync(req.resourceId);
+            var findType = await db.Resource.Where(u=>u.id == req.resourceId).FirstOrDefaultAsync();
             if (findType == null)
             {
                 return (false, $"resourceId id={req.resourceId} not exist");
@@ -76,7 +76,16 @@ namespace BE_ABC.Services
 
             return (true, "");
         }
+        internal async Task<List<ResourceUsing>> getByUid(string uid)
+        {
+            var post = db.ResourceUsing.Where(u => u.borrowerUid == uid)
+                .Include(u => u.Reporter)
+                .Include(u => u.Borrower)
+                .Include(u => u.Resource)
+                .ToList();
 
+            return post;
+        }
         public List<ResourceUsing> getAll(Pagination page)
         {
             var user = db.ResourceUsing

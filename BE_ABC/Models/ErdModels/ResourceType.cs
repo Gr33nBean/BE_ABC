@@ -2,6 +2,7 @@
 using BE_ABC.Models.ErdModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace BE_ABC.Models.ErdModels
 {

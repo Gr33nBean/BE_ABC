@@ -2,6 +2,7 @@
 using BE_ABC.Models.ErdModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace BE_ABC.Models.ErdModels
 {
@@ -13,7 +14,9 @@ namespace BE_ABC.Models.ErdModels
         public int id { get; set; }
         public string eventTypeId { get; set; }
         public string reporterUid { get; set; }
+        [JsonIgnore]
         public List<int> resouceUsingId { get; set; }
+        public int? resourceId { get; set; }
         public List<int> postsId { get; set; }
         public List<string> paticipantsUid { get; set; }
         public List<Grade> permissionIdToCRUDPost { get; set; }
@@ -30,7 +33,7 @@ namespace BE_ABC.Models.ErdModels
         public User User { get; set; }
         [ForeignKey("eventTypeId")]
         public EventType EventType { get; set; }
-        //[ForeignKey("resouceUsingId")]
-        //public ResourceUsing ResourceUsing { get; set; }
+        [ForeignKey("resourceId")]
+        public Resource Resource { get; set; }
     }
 }

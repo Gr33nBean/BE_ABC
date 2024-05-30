@@ -4,6 +4,7 @@ using BE_ABC.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE_ABC.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240529153221_add-image-resource")]
+    partial class addimageresource
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -395,9 +398,6 @@ namespace BE_ABC.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("resourceId")
-                        .HasColumnType("int");
-
                     b.Property<int>("startAt")
                         .HasColumnType("int");
 
@@ -412,8 +412,6 @@ namespace BE_ABC.Migrations
                     b.HasIndex("eventTypeId");
 
                     b.HasIndex("reporterUid");
-
-                    b.HasIndex("resourceId");
 
                     b.ToTable("Event");
                 });
@@ -519,7 +517,7 @@ namespace BE_ABC.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("requestTypeId")
+                    b.Property<string>("requestType")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
@@ -540,7 +538,7 @@ namespace BE_ABC.Migrations
 
                     b.HasIndex("reporterUid");
 
-                    b.HasIndex("requestTypeId");
+                    b.HasIndex("requestType");
 
                     b.HasIndex("requesterUid");
 
@@ -838,13 +836,7 @@ namespace BE_ABC.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BE_ABC.Models.ErdModel.Resource", "Resource")
-                        .WithMany()
-                        .HasForeignKey("resourceId");
-
                     b.Navigation("EventType");
-
-                    b.Navigation("Resource");
 
                     b.Navigation("User");
                 });
@@ -859,7 +851,7 @@ namespace BE_ABC.Migrations
 
                     b.HasOne("BE_ABC.Models.ErdModels.RequestType", "RequestType")
                         .WithMany()
-                        .HasForeignKey("requestTypeId")
+                        .HasForeignKey("requestType")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -902,7 +894,7 @@ namespace BE_ABC.Migrations
                         .IsRequired();
 
                     b.HasOne("BE_ABC.Models.ErdModel.Resource", "Resource")
-                        .WithMany()
+                        .WithMany("ResourceUsing")
                         .HasForeignKey("resourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -921,6 +913,11 @@ namespace BE_ABC.Migrations
                         .HasForeignKey("departmentId");
 
                     b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("BE_ABC.Models.ErdModel.Resource", b =>
+                {
+                    b.Navigation("ResourceUsing");
                 });
 
             modelBuilder.Entity("BE_ABC.Models.ErdModels.Event", b =>

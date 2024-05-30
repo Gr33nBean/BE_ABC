@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using BE_ABC.Models.CommonModels;
+using BE_ABC.Models.DTO.insertReq;
 using BE_ABC.Models.DTO.Request;
 using BE_ABC.Models.ErdModels;
 using BE_ABC.Services;
@@ -26,7 +27,7 @@ namespace BE_ABC.Controllers
                 List<Event> list = new List<Event>();
                 foreach (var req in uid)
                 {
-                    var find = await eventService.FindByIdAsync(req);
+                    var find = await eventService.getById(req);
                     if (find != null)
                     {
                         list.Add(find);
@@ -97,7 +98,7 @@ namespace BE_ABC.Controllers
                     await eventService.update(req);
                 }
 
-                return NoContent();
+                return Ok("Success");
             }
             catch (Exception ex)
             {
@@ -118,7 +119,35 @@ namespace BE_ABC.Controllers
                         await eventService.DeleteAsync(find);
                 }
 
-                return NoContent();
+                return Ok("Success");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("search")]
+        public async Task<IActionResult> search(SearchReq req)
+        {
+            try
+            {
+                return Ok(eventService.search(req));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("today")]
+        public async Task<IActionResult> today()
+        {
+            try
+            {
+                return Ok(eventService.today());
             }
             catch (Exception ex)
             {

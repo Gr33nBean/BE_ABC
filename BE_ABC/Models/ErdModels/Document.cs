@@ -1,6 +1,7 @@
 ﻿using BE_ABC.ConstValue;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace BE_ABC.Models.ErdModels
 {

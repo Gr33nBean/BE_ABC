@@ -23,19 +23,14 @@ namespace BE_ABC.Models.ErdModel
         public List<string> files { get; set; }
         public int likes {  get; set; }
         public int comments {  get; set; }
-        [JsonIgnore]
         public int createAt { get; set; }
-        [JsonIgnore]
         public int updateAt { get; set; }
         public StatusType status { get; set; }
         [ForeignKey("postTypeId")]
-        [JsonIgnore]
         public PostType PostType { get; set; }
         [ForeignKey("creatorUid")]
-        [JsonIgnore]
         public User User { get; set; }
         [ForeignKey("eventId")]
-        [JsonIgnore]
         public Event Event { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BE_ABC.ConstValue;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace BE_ABC.Models.ErdModels
 {
@@ -12,7 +13,7 @@ namespace BE_ABC.Models.ErdModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         public string requesterUid { get; set; }
-        public string requestType { get; set; }
+        public string requestTypeId { get; set; }
         public string reporterUid { get; set; }
         public string name { get; set; }
         [Column(TypeName = "text")]
@@ -30,7 +31,7 @@ namespace BE_ABC.Models.ErdModels
         public User Requester { get; set; }
         [ForeignKey("reporterUid")]
         public User Reporter { get; set; }
-        [ForeignKey("requestType")]
+        [ForeignKey("requestTypeId")]
         public RequestType RequestType { get; set; }
     }
 }
