@@ -23,6 +23,7 @@ namespace BE_ABC.Services
             var item = await db.Set<Event>()
                           .Include(e => e.EventType)
                           .Include(e => e.User)
+                          .Include(e => e.Resource)
                           .FirstOrDefaultAsync(e => e.id == id);  // Use FirstOrDefaultAsync for async operation
 
             return item;
@@ -41,6 +42,7 @@ namespace BE_ABC.Services
             var events = db.Event
                  .Include(e => e.EventType) 
                  .Include(e => e.User)
+                 .Include(e => e.Resource)
                  .Skip((page.page - 1) * page.limit)
                  .Take(page.limit)
                  .ToList();
@@ -56,7 +58,7 @@ namespace BE_ABC.Services
                 findEvent.name = item.name;
                 findEvent.eventTypeId = item.eventTypeId;
                 findEvent.reporterUid = item.reporterUid;
-                findEvent.resouceUsingId = item.resouceUsingId;
+                findEvent.resourceId = item.resourceId;
                 findEvent.postsId = item.postsId;
                 findEvent.paticipantsUid = item.paticipantsUid;
                 findEvent.permissionIdToCRUDPost = item.permissionIdToCRUDPost;
@@ -88,7 +90,7 @@ namespace BE_ABC.Services
             newEvent.name = item.name;
             newEvent.eventTypeId = item.eventTypeId;
             newEvent.reporterUid = item.reporterUid;
-            newEvent.resouceUsingId = item.resouceUsingId;
+            newEvent.resourceId = item.resourceId;
             newEvent.postsId = item.postsId;
             newEvent.paticipantsUid = item.paticipantsUid;
             newEvent.permissionIdToCRUDPost = item.permissionIdToCRUDPost;
@@ -98,13 +100,20 @@ namespace BE_ABC.Services
             newEvent.createAt = DateTimeExtensions.getUxixTimeNow();
             newEvent.updateAt = DateTimeExtensions.getUxixTimeNow();
             newEvent.status = item.status;
+            newEvent.resouceUsingId = new List<int>();
 
             db.Attach(newEvent);
             var entityEntry = await db.Set<Event>().AddAsync(newEvent);
 
             await db.SaveChangesAsync();
 
-            return entityEntry.Entity;
+            var newItem = await db.Set<Event>()
+                       .Include(e => e.EventType)
+                       .Include(e => e.User)
+                       .Include(e => e.Resource)
+                       .FirstOrDefaultAsync(e => e.id == entityEntry.Entity.id);  // Use FirstOrDefaultAsync for async operation
+
+            return newItem;
         }
     }
 }

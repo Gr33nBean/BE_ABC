@@ -97,7 +97,7 @@ namespace BE_ABC.Controllers
                     await eventService.update(req);
                 }
 
-                return NoContent();
+                return Ok("Success");
             }
             catch (Exception ex)
             {
@@ -118,7 +118,7 @@ namespace BE_ABC.Controllers
                         await eventService.DeleteAsync(find);
                 }
 
-                return NoContent();
+                return Ok("Success");
             }
             catch (Exception ex)
             {
