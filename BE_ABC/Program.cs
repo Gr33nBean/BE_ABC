@@ -60,6 +60,7 @@ try
         services.AddScoped<ResourceService, ResourceService>();
         services.AddScoped<ResourceUsingService, ResourceUsingService>();
         services.AddScoped<EventService, EventService>();
+        services.AddScoped<RequestService, RequestService>();
 
         services.AddSingleton<DriveService>(sp =>
         {
