@@ -102,7 +102,7 @@ namespace BE_ABC.Controllers
         }
         [HttpDelete]
         [Route("")]
-        public async Task<IActionResult> hardDelete(List<int> uid)
+        public async Task<IActionResult> hardDelete(List<string> uid)
         {
             try
             {

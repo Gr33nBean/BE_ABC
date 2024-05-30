@@ -8,7 +8,7 @@ namespace BE_ABC.Models.DTO.Req
     {
         public int id { get; set; }
         public string requesterUid { get; set; }
-        public string requestType { get; set; }
+        public string requestTypeId { get; set; }
         public string reporterUid { get; set; }
         public string name { get; set; }
         public string description { get; set; }
@@ -22,7 +22,7 @@ namespace BE_ABC.Models.DTO.Req
     public class RequestCreateReq
     {
         public string requesterUid { get; set; }
-        public string requestType { get; set; }
+        public string requestTypeId { get; set; }
         public string reporterUid { get; set; }
         public string name { get; set; }
         public string description { get; set; }

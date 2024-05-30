@@ -1,6 +1,9 @@
 ﻿using BE_ABC.Models.CommonModels;
 using BE_ABC.Models.Context;
 using BE_ABC.Models.DTO.Req;
+using BE_ABC.Models.DTO.Request;
+using BE_ABC.Models.DTO.Req;
+using BE_ABC.Models.ErdModel;
 using BE_ABC.Models.ErdModels;
 using BE_ABC.Services.GenericService;
 using BE_ABC.Util;
@@ -13,12 +16,23 @@ namespace BE_ABC.Services
         public RequestService(MyDbContext context) : base(context)
         {
         }
+        internal async Task<List<Request>> getByUid(string uid)
+        {
+            var list = db.Request.Where(u=>u.requesterUid == uid)
+                 .Include(u => u.Requester)
+                .Include(u => u.Reporter)
+                .Include(u => u.RequestType)
+                .ToList();
+
+            return list;
+        }
         internal async Task<Request?> get(int req)
         {
             var user = db.Request
             .Where(u => u.id == req)
             .Include(u => u.Requester)
             .Include(u => u.Reporter)
+            .Include(u => u.RequestType)
             .FirstOrDefault();
 
             return user;
@@ -26,11 +40,11 @@ namespace BE_ABC.Services
 
         internal List<Request> getAll(Pagination page)
         {
-            var user = db
-                .Request
-                .Skip((page.page - 1) * page.limit)
-                .Take(page.limit)
-                .ToList();
+            var user = db.Request
+            .Include(u => u.Requester)
+            .Include(u => u.Reporter)
+            .Include(u => u.RequestType)
+            .Skip((page.page - 1) * page.limit).Take(page.limit).ToList();
 
             return user;
         }
@@ -42,7 +56,7 @@ namespace BE_ABC.Services
             Request newPost = new Request();
 
             newPost.requesterUid = req.requesterUid;
-            newPost.requestType = req.requestType;
+            newPost.requestTypeId = req.requestTypeId;
             newPost.reporterUid = req.reporterUid;
             newPost.name = req.name;
             newPost.description = req.description;
@@ -70,7 +84,7 @@ namespace BE_ABC.Services
             {
                 findUser.id = req.id;
                 findUser.requesterUid = req.requesterUid;
-                findUser.requestType = req.requestType;
+                findUser.requestTypeId = req.requestTypeId;
                 findUser.reporterUid = req.reporterUid;
                 findUser.name = req.name;
                 findUser.description = req.description;
@@ -102,10 +116,10 @@ namespace BE_ABC.Services
             }
 
 
-            var findEvent = await db.RequestType.FindAsync(req.requestType);
+            var findEvent = await db.RequestType.FindAsync(req.requestTypeId);
             if (findEvent == null)
             {
-                return (false, $"RequestType id={req.requestType} not exist");
+                return (false, $"RequestType id={req.requestTypeId} not exist");
             }
 
 
@@ -128,10 +142,10 @@ namespace BE_ABC.Services
             }
 
         
-            var findEvent = await db.RequestType.FindAsync(req.requestType);
+            var findEvent = await db.RequestType.FindAsync(req.requestTypeId);
             if (findEvent == null)
             {
-                return (false, $"RequestType id={req.requestType} not exist");
+                return (false, $"RequestType id={req.requestTypeId} not exist");
             }
             
 
@@ -145,15 +159,6 @@ namespace BE_ABC.Services
             return (true, "");
         }
 
-        internal async Task<List<Request>> getByUid(string uid)
-        {
-            var list = db.Request.Where(u=>u.requesterUid == uid)
-                    .Include(u => u.Requester)
-                    .Include(u => u.Reporter)
-                    .Include(u => u.RequestType)
-                    .ToList();
 
-            return list;
-        }
     }
 }
