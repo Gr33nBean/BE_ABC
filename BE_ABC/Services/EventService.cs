@@ -1,6 +1,7 @@
 ﻿using BE_ABC.ConstValue;
 using BE_ABC.Models.CommonModels;
 using BE_ABC.Models.Context;
+using BE_ABC.Models.DTO.insertReq;
 using BE_ABC.Models.DTO.Request;
 using BE_ABC.Models.ErdModels;
 using BE_ABC.Services.GenericService;
@@ -8,6 +9,7 @@ using BE_ABC.Util;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BE_ABC.Services
@@ -114,6 +116,27 @@ namespace BE_ABC.Services
                        .FirstOrDefaultAsync(e => e.id == entityEntry.Entity.id);  // Use FirstOrDefaultAsync for async operation
 
             return newItem;
+        }
+
+        public  List<Event> search(SearchReq page)
+        {
+            // Ensure page number is not less than 1
+            if (page.page < 1)
+                page.page = 1;
+
+            // Ensure limit is not less than 1
+            if (page.limit < 1)
+                page.limit = 1;
+
+            var events = db.Event
+                 .Where(e => e.name.Contains(page.text)|| e.description.Contains(page.text))
+                 .Include(e => e.EventType)
+                 .Include(e => e.User)
+                 .Include(e => e.Resource)
+                 .Skip((page.page - 1) * page.limit)
+                 .Take(page.limit)
+                 .ToList();
+            return events;
         }
     }
 }

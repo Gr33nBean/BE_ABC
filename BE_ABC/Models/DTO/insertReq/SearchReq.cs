@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BE_ABC.Controllers
+namespace BE_ABC.Models.DTO.insertReq
 {
     public class SearchReq
     {

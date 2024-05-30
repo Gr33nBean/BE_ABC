@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using BE_ABC.Models.CommonModels;
+using BE_ABC.Models.DTO.insertReq;
 using BE_ABC.Models.DTO.Request;
 using BE_ABC.Models.ErdModels;
 using BE_ABC.Services;
@@ -119,6 +120,20 @@ namespace BE_ABC.Controllers
                 }
 
                 return Ok("Success");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("search")]
+        public async Task<IActionResult> search(SearchReq req)
+        {
+            try
+            {
+                return Ok(eventService.search(req));
             }
             catch (Exception ex)
             {

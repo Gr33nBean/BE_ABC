@@ -1,4 +1,5 @@
 ﻿using BE_ABC.Models.CommonModels;
+using BE_ABC.Models.DTO.insertReq;
 using BE_ABC.Models.DTO.Request;
 using BE_ABC.Models.DTO.updateReq;
 using BE_ABC.Models.ErdModel;
@@ -145,6 +146,20 @@ namespace BE_ABC.Controllers
                 List<Post> list = await postService.getByUid(uid);
 
                 return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("search")]
+        public IActionResult search(SearchReq req)
+        {
+            try
+            {
+                return Ok(postService.search(req));
             }
             catch (Exception ex)
             {
