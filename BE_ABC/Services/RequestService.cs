@@ -19,7 +19,6 @@ namespace BE_ABC.Services
             .Where(u => u.id == req)
             .Include(u => u.Requester)
             .Include(u => u.Reporter)
-            .Include(u => u.RequestType)
             .FirstOrDefault();
 
             return user;
@@ -27,11 +26,11 @@ namespace BE_ABC.Services
 
         internal List<Request> getAll(Pagination page)
         {
-            var user = db.Request
-            .Include(u => u.Requester)
-            .Include(u => u.Reporter)
-            .Include(u => u.RequestType)
-            .Skip((page.page - 1) * page.limit).Take(page.limit).ToList();
+            var user = db
+                .Request
+                .Skip((page.page - 1) * page.limit)
+                .Take(page.limit)
+                .ToList();
 
             return user;
         }

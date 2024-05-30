@@ -20,7 +20,7 @@ namespace BE_ABC.Controllers
         }
         [HttpPost]
         [Route("getAll")]
-        public IActionResult getAll(Pagination pagination)
+        public IActionResult getAll([FromBody] Pagination pagination)
         {
             try
             {

@@ -38,7 +38,7 @@ namespace BE_ABC.Controllers
                 List<RequestType> list = new List<RequestType>();
                 foreach (var req in id)
                 {
-                    var find = await RequestTypeService.FindByIdAsync(req);
+                    var find = await RequestTypeService.get(req);
                     if (find != null)
                     {
                         list.Add(find);
